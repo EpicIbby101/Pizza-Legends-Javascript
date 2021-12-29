@@ -1,49 +1,52 @@
 class Overworld {
-    constructor(config) { // creates an instance of a class
-      this.element = config.element;
-      this.canvas = this.element.querySelector(".game-canvas");
-      this.ctx = this.canvas.getContext("2d");
-      this.map = null;
-    }
+ constructor(config) {
+   this.element = config.element;
+   this.canvas = this.element.querySelector(".game-canvas");
+   this.ctx = this.canvas.getContext("2d");
+   this.map = null;
+ }
 
-    startGameLoop() {
-      const step = () => {
+  startGameLoop() {
+    const step = () => {
+      //Clear off the canvas
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // cleans off the canvas
-        this.ctx.clearRect (0, 0, this.canvas.width, this.canvas.height);
+      //Establish the camera person
+      const cameraPerson = this.map.gameObjects.hero;
 
-        // draw lower layer
-        this.map.drawLowerImage(this.ctx);
-
-        // draw game objects
-        Object.values(this.map.gameObjects).forEach(object => {
-          object.update({
-            arrow: this.directionInput.direction
-
-          }); // every frame that runs, char to more right by 0.5
-          object.sprite.draw(this.ctx);
+      //Update all objects
+      Object.values(this.map.gameObjects).forEach(object => {
+        object.update({
+          arrow: this.directionInput.direction,
+          map: this.map,
         })
+      })
 
-        // draw upper layer
-        this.map.drawUpperImage(this.ctx);
+      //Draw Lower layer
+      this.map.drawLowerImage(this.ctx, cameraPerson);
 
-        requestAnimationFrame(() => {
-        step();
+      //Draw Game Objects
+      Object.values(this.map.gameObjects).forEach(object => {
+        object.sprite.draw(this.ctx, cameraPerson);
+      })
+
+      //Draw Upper layer
+      this.map.drawUpperImage(this.ctx, cameraPerson);
+      
+      requestAnimationFrame(() => {
+        step();   
       })
     }
-      step();
-    }
-   
-    init () {
-      this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
+    step();
+ }
 
-      this.directionInput = new DirectionInput();
-      this.directionInput.init();
-      this.directionInput.direction; //"down"
+ init() {
+  this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
+  this.map.mountObjects();
 
-      this.startGameLoop();
-    }
-  
-    }
-    // creating a new instance of overworld map, passing in the config data from demoroom
-   
+  this.directionInput = new DirectionInput();
+  this.directionInput.init();
+
+  this.startGameLoop();
+ }
+}
