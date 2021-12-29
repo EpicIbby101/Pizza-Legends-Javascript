@@ -1,5 +1,5 @@
-class Overworld {
- constructor(config) {
+class Overworld { 
+ constructor(config) { // creates an instance of a class
    this.element = config.element;
    this.canvas = this.element.querySelector(".game-canvas");
    this.ctx = this.canvas.getContext("2d");
@@ -13,6 +13,7 @@ class Overworld {
 
       //Establish the camera person
       const cameraPerson = this.map.gameObjects.hero;
+      // const > var = this > reference to object
 
       //Update all objects
       Object.values(this.map.gameObjects).forEach(object => {
@@ -21,6 +22,7 @@ class Overworld {
           map: this.map,
         })
       })
+      // erases jagged edges when moving around
 
       //Draw Lower layer
       this.map.drawLowerImage(this.ctx, cameraPerson);
@@ -50,3 +52,4 @@ class Overworld {
   this.startGameLoop();
  }
 }
+  // creating a new instance of overworld map, passing in the config data from demoroom

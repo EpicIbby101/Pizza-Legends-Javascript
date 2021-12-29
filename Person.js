@@ -1,9 +1,10 @@
 class Person extends GameObject {
   constructor(config) {
-    super(config);
+    super(config); // will run the GameObject code too
     this.movingProgressRemaining = 0;
 
     this.isPlayerControlled = config.isPlayerControlled || false;
+    // distinguishes player from npc, disabling double movement
 
     this.directionUpdate = {
       "up": ["y", -1],
@@ -52,6 +53,8 @@ class Person extends GameObject {
 
   updatePosition() {
       const [property, change] = this.directionUpdate[this.direction];
+      // direction is a reference to GameObject which is an extension to direction from Gameobject fil
+
       this[property] += change;
       this.movingProgressRemaining -= 1;
   }

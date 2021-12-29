@@ -1,7 +1,7 @@
 class OverworldMap {
   constructor(config) {
     this.gameObjects = config.gameObjects;
-    this.walls = config.walls || {};
+    this.walls = config.walls || {}; // keeps track of wall collision code
 
     this.lowerImage = new Image();
     this.lowerImage.src = config.lowerSrc;
@@ -30,6 +30,10 @@ class OverworldMap {
     const {x,y} = utils.nextPosition(currentX, currentY, direction);
     return this.walls[`${x},${y}`] || false;
   }
+
+// lowerSrc for objects on "Back layer"
+// upperSrc for objects on "Front layer"
+// these allow for two different images to be drawn at a certain time
 
   mountObjects() {
     Object.values(this.gameObjects).forEach(o => {
@@ -98,3 +102,5 @@ window.OverworldMaps = {
     }
   },
 }
+// ^^ Object of all the different maps of the game ^^
+// configuation of all the different maps can be found in here

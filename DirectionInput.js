@@ -25,6 +25,8 @@ class DirectionInput {
         this.heldDirections.unshift(dir);
       }
     });
+// addEventListener allows the code to know when an input is pressed
+
     document.addEventListener("keyup", e => {
       const dir = this.map[e.code];
       const index = this.heldDirections.indexOf(dir);

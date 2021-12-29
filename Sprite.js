@@ -4,7 +4,7 @@ class Sprite {
     //Set up the image
     this.image = new Image();
     this.image.src = config.src;
-    this.image.onload = () => {
+    this.image.onload = () => { //'onload' excecutes a js script immediately after a page/ object loads
       this.isLoaded = true;
     }
 
@@ -50,6 +50,8 @@ class Sprite {
       this.currentAnimationFrame = 0;
       this.animationFrameProgress = this.animationFrameLimit;
     }
+    /* Add a check to see if animation is changing, then reset frame back to 0.
+      Reset counter that's keeping track on when to move to next frame*/
   }
 
   updateAnimationProgress() {
@@ -91,3 +93,5 @@ class Sprite {
   }
 
 }
+// a constructor allows you to create and initialize an object instance of that class
+// 'this' refer to the object it belongs to 
