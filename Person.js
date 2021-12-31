@@ -57,6 +57,14 @@ class Person extends GameObject {
 
       this[property] += change;
       this.movingProgressRemaining -= 1;
+
+      if (this.movingProgressRemaining === 0){
+        // we finished the walk
+        utils.emitEvent("PersonWalkingComplete", {
+          whoId: this.id
+        })
+
+      }
   }
 
   updateSprite() {
